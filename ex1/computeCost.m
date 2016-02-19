@@ -13,9 +13,9 @@ J = 0;
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
 
-predictedY = X * theta
-diffY = predictedY - y
-J = sum(diffY.^2) / 2 / m
+predictedY = X * theta;
+diffY = predictedY - y;
+J = sum(diffY.^2) / 2 / m;
 
 % =========================================================================
 
