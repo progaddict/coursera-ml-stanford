@@ -13,12 +13,10 @@ figure; hold on;
 %
 
 
-
-
-
-
-
-
+positive_x = X(y==1, :);
+negative_x = X(y==0, :);
+plot(positive_x(:,1), positive_x(:,1), 'k+');
+plot(negative_x(:,1), negative_x(:,1));
 
 % =========================================================================
 

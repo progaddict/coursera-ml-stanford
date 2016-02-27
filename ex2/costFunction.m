@@ -21,11 +21,15 @@ grad = zeros(size(theta));
 %
 
 
+sigmoid_argument = zeros(m, 1);
+for i=1:m,
+  sigmoid_argument(i) = X(i,:) * theta;
+end
+estimated_probability = sigmoid(sigmoid_argument);
 
+J = -(y' * log(estimated_probability) + (1-y)' * log(1-estimated_probability));
 
-
-
-
+grad = (X' * (estimated_probability - y)) ./ m;
 
 % =============================================================
 

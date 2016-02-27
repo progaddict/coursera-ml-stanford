@@ -16,10 +16,12 @@ p = zeros(m, 1);
 %
 
 
-
-
-
-
+sigmoid_argument = zeros(m, 1);
+for i=1:m,
+  sigmoid_argument(i) = X(i,:) * theta;
+end
+estimated_probability = sigmoid(sigmoid_argument);
+p(estimated_probability >= 0.5) = 1;
 
 % =========================================================================
 
