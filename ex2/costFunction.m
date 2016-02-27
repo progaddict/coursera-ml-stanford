@@ -27,7 +27,8 @@ for i=1:m,
 end
 estimated_probability = sigmoid(sigmoid_argument);
 
-J = -(y' * log(estimated_probability) + (1-y)' * log(1-estimated_probability));
+J = -(y' * log(estimated_probability)
+        + (1-y)' * log(1-estimated_probability)) / m;
 
 grad = (X' * (estimated_probability - y)) ./ m;
 
