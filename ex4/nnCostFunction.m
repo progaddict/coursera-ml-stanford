@@ -62,23 +62,38 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X = [ones(m, 1) X];
 
+delta_cum1 = zeros(size(Theta1_grad));
+delta_cum2 = zeros(size(Theta2_grad));
+for i = 1:m
+  % forward propagation
+  a1 = X(i, :)';
+  a2 = [1; sigmoid(Theta1 * a1)];
+  a3 = sigmoid(Theta2 * a2);
+  % compute part of J
+  class_label = y(i);
+  for k = 1:num_labels
+    if class_label == k
+      J = J + log(a3(k));
+    else
+      J = J + log(1 - a3(k));
+    end
+  end
+  % back propagation
+  delta3 = a3(:,:);
+  delta3(class_label) = delta3(class_label) - 1;
+  delta2 = (Theta2' * delta3) .* a2 .* (1-a2);
+  delta_cum2 = delta_cum2 + delta3 * a2';
+  delta_cum1 = delta_cum1 + delta2(2:size(delta2,1)) * a1';
+end
 
+J = (lambda * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2))) / 2 - J) / m;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta2_grad = (delta_cum2 + lambda * Theta2) / m;
+Theta2_grad(:, 1) = delta_cum2(:, 1) / m;
+Theta1_grad = (delta_cum1 + lambda * Theta1) / m;
+Theta1_grad(:, 1) = delta_cum1(:, 1) / m;
 
 % -------------------------------------------------------------
 
