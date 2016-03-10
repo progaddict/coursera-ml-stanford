@@ -88,7 +88,8 @@ for i = 1:m
   delta_cum1 = delta_cum1 + delta2(2:size(delta2,1)) * a1';
 end
 
-J = (lambda * (sum(sum(Theta1.^2)) + sum(sum(Theta2.^2))) / 2 - J) / m;
+J = (lambda * (sum(sum(Theta1(:, 2:size(Theta1,2)).^2))...
+             + sum(sum(Theta2(:, 2:size(Theta2,2)).^2))) / 2 - J) / m;
 
 Theta2_grad = (delta_cum2 + lambda * Theta2) / m;
 Theta2_grad(:, 1) = delta_cum2(:, 1) / m;
