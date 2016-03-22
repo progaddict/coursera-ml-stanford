@@ -23,11 +23,26 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
-
-
-
-
-
+min_error = Inf;
+possible_C = [0.9 1 1.1];
+possible_sigma = [0.09 0.1 0.11];
+for i = 1:length(possible_C)
+    current_C = possible_C(i);
+    for j = 1:length(possible_sigma)
+        current_sigma = possible_sigma(j);
+        model= svmTrain(X, y, current_C, @(x1, x2) gaussianKernel(x1, x2, current_sigma));
+        predicted_values = svmPredict(model, Xval);
+        current_error = mean(double(predicted_values ~= yval));
+        fprintf('%f \t %f \t %f\n', current_C, current_sigma, current_error);
+        if (current_error < min_error)
+            C = current_C;
+            sigma = current_sigma;
+            min_error = current_error;
+            fprintf('updated C to %f and sigma to %f, error is %f\n', C, sigma, min_error);
+        end
+    end
+end 
+fprintf('C = %f, sigma = %f', C, sigma);
 
 % =========================================================================
 
