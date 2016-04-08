@@ -40,20 +40,11 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+predYandTrueYDiff = (X * Theta' - Y) .* R;
+J = 0.5 * sum(sum(predYandTrueYDiff.^2));
+J = J + 0.5 * lambda * (sum(sum(X.^2)) + sum(sum(Theta.^2)));
+X_grad = predYandTrueYDiff * Theta + lambda * X;
+Theta_grad = predYandTrueYDiff' * X + lambda * Theta;
 
 % =============================================================
 
